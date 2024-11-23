@@ -1,9 +1,14 @@
 var express = require('express');
 var app = express();
 var fs = require('fs');
-app.set('view engine','pug')
 var bodyParser = require("body-parser")
+var cors = require('cors')
+app.use(cors())
+app.set('view engine','pug')
 app.use(bodyParser.urlencoded({extended:false}))
+
+app.use(express.static(__dirname+"/images"))
+app.use(express.static(__dirname+"/public"))
 
 app.get("/deleteReview/:id",function(req,res){
     console.log(req.params.id)
