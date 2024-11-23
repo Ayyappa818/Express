@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="2">
+        <thead>
+            <tr>
+             <th id="A">Firstname</th>
+             <th>Lastname</th>
+             <th>Age</th>
+             <th>Gender</th>
+             <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr id="t1">
+            </tr>
+          </tbody>
+    </table>
+    <script>
+        function details(){
+            fetch("http://localhost:4500/data").then(
+            (res)=>{
+                res.json().then((data)=>{
+                    console.log(data)
+                })
+            }
+        )
+        }
+        details()
+        var x=document.getElementById("t1")
+        var y=document.createElement("td")
+    </script>
+</body>
+</html>
