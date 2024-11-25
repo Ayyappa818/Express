@@ -7,34 +7,12 @@ app.use(cors())
 app.set('view engine','pug')
 app.use(bodyParser.urlencoded({extended:false}))
 
+var reviewRouter = require("./routes/reviews.routes") 
 app.use(express.static(__dirname+"/images"))
 app.use(express.static(__dirname+"/public"))
 
-app.get("/deleteReview/:id",function(req,res){
-    console.log(req.params.id)
-    var reviews = JSON.parse(fs.readFileSync("reviews.txt").toString());
-    reviews.splice(req.params.id,1)
-    fs.writeFileSync('reviews.txt',JSON.stringify(reviews))
-    res.send("delete karo")
-})
-
-app.post("/addReview",function(req,res){
-    console.log(req.body)
-    var reviews = JSON.parse(fs.readFileSync("reviews.txt").toString());
-    reviews.push(req.body)
-    fs.writeFileSync('reviews.txt',JSON.stringify(reviews))
-    res.send("aagu ra aandhi ni thuthara")
-})
-
-app.get("/getReview",function(req,res){
-    res.sendFile(__dirname+"/addreview.html")
-})
-
-app.get('/',function(req,res){
-    var reviews = JSON.parse(fs.readFileSync("reviews.txt").toString());
-    res.render("home",{reviews:reviews,students:['sandeep','philip','sai','tarun']})
-})
-
+app.use("/reviews",reviewRouter)
+app.get("/",function(req,res){res.send("Hello Home")})
 app.get("/student",function(req,res){
     console.log(req.params)
     res.send("hi student")
