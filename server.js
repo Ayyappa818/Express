@@ -1,18 +1,24 @@
 var express = require('express');
 var app = express();
 var fs = require('fs');
-var bodyParser = require("body-parser")
 var cors = require('cors')
 app.use(cors())
+var bodyParser = require("body-parser")
+var reviewRouter = require("./routes/reviews.routes") 
 app.set('view engine','pug')
+app.use(express.static(__dirname+"/public"))
+app.use(express.static(__dirname+"/images"))
 app.use(bodyParser.urlencoded({extended:false}))
 
-var reviewRouter = require("./routes/reviews.routes") 
-app.use(express.static(__dirname+"/images"))
-app.use(express.static(__dirname+"/public"))
+// app.get("/",function(req,res){res.sendFile(__dirname+"/public/Home.html")})
+
+app.use(function(req,res,next){
+    console.log("Middleware executed")
+    next();
+})
 
 app.use("/reviews",reviewRouter)
-app.get("/",function(req,res){res.send("Hello Home")})
+
 app.get("/student",function(req,res){
     console.log(req.params)
     res.send("hi student")
